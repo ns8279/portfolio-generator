@@ -1,5 +1,5 @@
-//const fs = require('fs'); //require the FileSystem Module to be able to create an html file
-//const generatePage = require('./src/page-template.js');
+const fs = require('fs'); //require the FileSystem Module to be able to create an html file
+const generatePage = require('./src/page-template.js');
 
 // const profileDataArgs = process.argv.slice(2);
 // const [name, github] = profileDataArgs;
@@ -152,8 +152,13 @@ const promptProject = portfolioData => {
 promptUser()
     .then(promptProject)
     .then(portfolioData => {
-        console.log(portfolioData);
-    })
+         const pageHTML = generatePage(portfolioData);
+
+        fs.writeFile('index.html', pageHTML, err => {
+                if(err) throw new Error(err);
+                 console.log('Page Created! Checkout index.html to see the output!');
+        });
+    });
     
 
 
